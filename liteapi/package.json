@@ -1,0 +1,10 @@
+{
+  "name": "liteapi",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "evanykx",
+  "license": "MIT",
+  "dependencies": {
+    "koa": "^2.7.0"
+  }
+}
