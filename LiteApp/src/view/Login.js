@@ -9,9 +9,18 @@ import {
   CheckBox,
   Button,
   StatusBar,
+  Dimensions,
+  Platform,
+  PixelRatio,
+  Alert,
+  TouchableHighlight, TouchableOpacity, TouchableNativeFeedback, TouchableWithoutFeedback
 } from 'react-native';
 
 class Login extends Component {
+  static navigationOptions = {
+    title: 'Home'
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -26,26 +35,47 @@ class Login extends Component {
       ...this.state,
       username: text
     });
-  }
+  };
 
   onPasswordChange = (text) => {
     this.setState({
       ...this.state,
       password: text
     });
-  }
+  };
 
   onRememberMeChecked = (value) => {
     this.setState({
       ...this.state,
       rememberme: value
     });
-  }
+  };
+
+  _onPressButton = () => {
+    Alert.alert('You tapped the button!')
+  };
+
+  _onLongPressButton = () => {
+    Alert.alert('You long-pressed the button!')
+  };
+
+  _onRedirectTo = () => {
+    this.props.navigation.push('App');
+  };
 
   render() {
     const styles = StyleSheet.create({
       scrollView: {
-        backgroundColor: "#ececec"
+        backgroundColor: "#ececec",
+      },
+      container: {
+        justifyContent: 'center',
+        alignItems: 'center'
+      },
+      title: {
+        fontSize: 28,
+        fontWeight: "800",
+        color: "white"
       }
     });
 
@@ -56,27 +86,62 @@ class Login extends Component {
           <ScrollView
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>
-            <Text>Please Sign In</Text>
-            <View>
-              <Text>Username</Text>
-              <TextInput 
-                onChangeText={this.onUsernameChange}
-                placeholder="Please input username">
-              </TextInput>
+            <View style={styles.container}>
+              <Text style={styles.title}>Please Sign In</Text>
+              <View>
+                <Text>Username</Text>
+                <TextInput
+                  onChangeText={this.onUsernameChange}
+                  placeholder="Please input username">
+                </TextInput>
+              </View>
+              <View>
+                <Text>Password</Text>
+                <TextInput
+                  onChangeText={this.onPasswordChange}
+                  placeholder="Please input password">
+                </TextInput>
+              </View>
+              <View>
+                <CheckBox onValueChange={this.onRememberMeChecked} checked={this.state.rememberme}></CheckBox>
+                <Text>Remember me!</Text>
+              </View>
+              <Button title="Sign in"  onPress={this._onPressButton}></Button>
+              <Button title="Sign up" onPress={this._onRedirectTo}></Button>
             </View>
+
+            
             <View>
-              <Text>Password</Text>
-              <TextInput
-                onChangeText={this.onPasswordChange}
-                placeholder="Please input password">
-              </TextInput>
+              <TouchableHighlight onPress={this._onPressButton} underlayColor="white">
+                <View style={styles.button}>
+                  <Text style={styles.buttonText}>TouchableHighlight</Text>
+                </View>
+              </TouchableHighlight>
+              <TouchableOpacity onPress={this._onPressButton}>
+                <View style={styles.button}>
+                  <Text style={styles.buttonText}>TouchableOpacity</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableNativeFeedback
+                  onPress={this._onPressButton}
+                  background={Platform.OS === 'android' ? TouchableNativeFeedback.SelectableBackground() : ''}>
+                <View style={styles.button}>
+                  <Text style={styles.buttonText}>TouchableNativeFeedback</Text>
+                </View>
+              </TouchableNativeFeedback>
+              <TouchableWithoutFeedback
+                  onPress={this._onPressButton}
+                  >
+                <View style={styles.button}>
+                  <Text style={styles.buttonText}>TouchableWithoutFeedback</Text>
+                </View>
+              </TouchableWithoutFeedback>
+              <TouchableHighlight onPress={this._onPressButton} onLongPress={this._onLongPressButton} underlayColor="white">
+                <View style={styles.button}>
+                  <Text style={styles.buttonText}>Touchable with Long Press</Text>
+                </View>
+              </TouchableHighlight>
             </View>
-            <View>
-              <CheckBox onValueChange={this.onRememberMeChecked}></CheckBox>
-              <Text>Remember me!</Text>
-            </View>
-            <Button title="Sign in"></Button>
-            <Button title="Sign up"></Button>
           </ScrollView>
         </SafeAreaView>
       </Fragment>
