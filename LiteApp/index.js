@@ -11,6 +11,7 @@ import { name as appName } from "./app.json";
 
 const store = configureStore();
 
+// 绑定Store和Router
 class RootApp extends Component {
   render() {
     return (
@@ -21,4 +22,5 @@ class RootApp extends Component {
   }
 }
 
+// 注册组件
 AppRegistry.registerComponent(appName, () => RootApp);

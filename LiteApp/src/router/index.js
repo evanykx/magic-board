@@ -9,15 +9,19 @@ import App from "../view/App";
 
 const RootStack = createStackNavigator(
   {
+    // 登录页面
     Login: {
       screen: Login
     },
+    // 测试第二页面
     App: {
       screen: App
     }
   },
   {
+    // 默认页面
     initialRouteName: "Login",
+    // 公用顶部导航样式
     defaultNavigationOptions: {
       title: "Home",
       headerStyle: {
@@ -31,8 +35,10 @@ const RootStack = createStackNavigator(
   }
 );
 
+// 建立导航应用容器
 const AppContainer = createAppContainer(RootStack);
 
+// 整合redux
 class AppRouter extends Component {
   render() {
     return <AppContainer />;

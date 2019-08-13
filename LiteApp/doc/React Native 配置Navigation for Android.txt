@@ -1,0 +1,79 @@
+1. 编写非自动关联配置
+### react-native.config.js
+module.exports = {
+  dependencies: {
+    'react-native-gesture-handler': {
+      platforms: {
+        android: null,
+        ios: null,
+      },
+    },
+  },
+};
+
+2. 安装包
+> yarn add react-navigation react-native-gesture-handler
+
+3. 关联react-native-gesture-handler
+> react-native link react-native-gesture-handler
+
+4. 用Android Studio打开Android工程，检查或修改以下文件
+### settings.gradle
+include ':react-native-gesture-handler'
+project(':react-native-gesture-handler').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-gesture-handler/android')
+
+### app\build.gradle
+implementation project(':react-native-gesture-handler')
+
+
+### MainApplication.java
+
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+
+public class MainApplication extends Application implements ReactApplication {
+
+  private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
+    ...
+
+    @Override
+    protected List<ReactPackage> getPackages() {
+      return Arrays.<ReactPackage>asList(
+          new MainReactPackage(),
+          new RNGestureHandlerPackage()
+      );
+    }
+
+    ...
+  };
+
+
+### MainActivity.java
+import com.facebook.react.ReactActivityDelegate;
+import com.facebook.react.ReactRootView;
+import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
+
+public class MainActivity extends ReactActivity {
+
+  ...
+
+  @Override
+  protected ReactActivityDelegate createReactActivityDelegate() {
+    return new ReactActivityDelegate(this, getMainComponentName()) {
+      @Override
+      protected ReactRootView createRootView() {
+       return new RNGestureHandlerEnabledRootView(MainActivity.this);
+      }
+    };
+  }
+}
+
+5. 重新编译运行
+
+6. 编写redux相关
+### src/redux/**
+
+7. 配置Router
+### src/router/index.js
+
+8. 绑定Store和Router
+### index.js
